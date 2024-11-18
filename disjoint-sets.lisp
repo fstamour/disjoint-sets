@@ -75,6 +75,20 @@ Example:
         (root2 (disjoint-sets-find sets id2)))
     (setf (aref sets root2) root1)))
 
+(defun copy-disjoint-sets (sets)
+  "Copy a set of sets into a fresh array.
+
+Exmaple:
+(let* ((sets (make-disjoint-sets 2))
+       (copy (copy-disjoint-sets sets)))
+  (disjoint-sets-unify sets 0 1)
+  (values sets copy))
+=> #(0 0), #(0 1)
+"
+  (make-array (length sets) :element-type 'integer
+                            :adjustable t :fill-pointer t
+                            :initial-contents sets))
+
 (defun disjoint-sets-same-set-p (sets id1 id2)
   "Test if 2 items are in the same set.
 
