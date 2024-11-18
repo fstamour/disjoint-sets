@@ -54,13 +54,13 @@ Example:
             (setf (aref sets id) root))
           root))))
 
-(defun disjoint-sets-union (sets id1 id2)
+(defun disjoint-sets-unify (sets id1 id2)
   "Merge two disjoint sets. Return the set representative (the root)
 
 Example:
 
-(disjoint-sets-union sets 1 2)
-=> 4 ; SETS is modified.
+(disjoint-sets-unify sets 1 2)
+=> 4 ; `sets' is modified.
 "
   (let ((root1 (disjoint-sets-find sets id1))
         (root2 (disjoint-sets-find sets id2)))

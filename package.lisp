@@ -6,5 +6,5 @@
    #:make-disjoint-sets
    #:disjoint-sets-add
    #:disjoint-sets-find
-   #:disjoint-sets-union
+   #:disjoint-sets-unify
    #:disjoint-sets-same-set-p))
