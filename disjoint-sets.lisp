@@ -7,7 +7,7 @@ https://en.wikipedia.org/wiki/Disjoint-set_data_structure
 - A set that has itself as a parent is called a root.
 - The root of a set is the representative of that set.
 Said otherwise: a set is identified by the id of its root set.
-- Sets are merged with the "union" operation.
+- Sets are merged with the "join" operation.
 
 |#
 
@@ -58,13 +58,13 @@ Example:
             (setf (aref sets id) root))
           root))))
 
-(defun disjoint-sets-union (sets id1 id2)
+(defun disjoint-sets-join (sets id1 id2)
   "Merge two disjoint sets. Return the set representative (the root)
 
 Example:
 
-(disjoint-sets-union sets 1 2)
-=> 4 ; SETS is modified.
+(disjoint-sets-join sets 1 2)
+=> 4 ; `sets' is modified.
 "
   (let ((root1 (disjoint-sets-find sets id1))
         (root2 (disjoint-sets-find sets id2)))
@@ -76,7 +76,7 @@ Example:
 Exmaple:
 (let* ((sets (make-disjoint-sets 2))
        (copy (copy-disjoint-sets sets)))
-  (disjoint-sets-unify sets 0 1)
+  (disjoint-sets-join sets 0 1)
   (values sets copy))
 => #(0 0), #(0 1)
 "
