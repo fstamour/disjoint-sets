@@ -13,7 +13,7 @@ Said otherwise: a set is identified by the id of its root set.
 
 (cl:in-package #:disjoint-sets)
 
-(defun make-disjoint-sets (&optional number-of-sets)
+(defun make-disjoint-sets (&optional (arity 0))
   "Create a set of sets represented as an array.
 
 Examples:
@@ -23,17 +23,12 @@ Examples:
 (make-disjoint-sets 10)
 ;; => #(0 1 2 3 4 5 6 7 8 9)
 "
-  (let ((sets (make-array (list (or number-of-sets 0))
-                          :element-type 'integer
-                          :adjustable t
-                          :fill-pointer t)))
-    (when number-of-sets
-      (loop :for i :below number-of-sets
-            :do (setf (aref sets i) i)))
-    sets))
+  (let ((sets (make-array `(,arity) :element-type 'integer
+                          :adjustable t :fill-pointer t)))
+    (dotimes (i arity sets) (setf (aref sets i) i))))
 
 (defun disjoint-sets-add (sets)
-  "Add a new item into its own disjoint set. Return a new id.
+  "Add a new item into its own disjoint set. Return the new id.
 
 Example:
 
@@ -41,9 +36,7 @@ Example:
   ;; SETS is modified
   ...)
 "
-  (let ((new-id  (length sets)))
-    (vector-push-extend new-id sets)
-    new-id))
+  (vector-push-extend (length sets) sets))
 
 (defun disjoint-sets-find (sets id)
   "Find the id of the set representative (the root).
@@ -53,9 +46,7 @@ Example:
 (disjoint-sets-find sets 5)
 "
   (let ((parent (aref sets id)))
-    (if (= id parent)
-        ;; If "id" is the root, just return it.
-        id
+    (if (= id parent) id             ; If `id' is the root, return it.
         (let ((root (disjoint-sets-find sets parent)))
           ;; Path compression: point directly to the root if it's not
           ;; already the case.
