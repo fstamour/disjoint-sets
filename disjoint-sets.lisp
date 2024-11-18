@@ -11,12 +11,7 @@ Said otherwise: a set is identified by the id of its root set.
 
 |#
 
-(cl:in-package #:cl-user)
-
-(defpackage #:disjoint-sets
-  (:use #:cl))
-
-(in-package #:disjoint-sets)
+(cl:in-package #:disjoint-sets)
 
 (defun make-disjoint-sets (&optional number-of-sets)
   "Create a set of sets represented as an array.
