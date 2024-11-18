@@ -13,7 +13,7 @@ Said otherwise: a set is identified by the id of its root set.
 
 (cl:in-package #:disjoint-sets)
 
-(defun make-disjoint-sets (&optional number-of-sets)
+(defun make-disjoint-sets (&optional (arity 0))
   "Create a set of sets represented as an array.
 
 Examples:
@@ -23,17 +23,12 @@ Examples:
 (make-disjoint-sets 10)
 ;; => #(0 1 2 3 4 5 6 7 8 9)
 "
-  (let ((sets (make-array (list (or number-of-sets 0))
-                          :element-type 'integer
-                          :adjustable t
-                          :fill-pointer t)))
-    (when number-of-sets
-      (loop :for i :below number-of-sets
-            :do (setf (aref sets i) i)))
-    sets))
+  (let ((sets (make-array `(,arity) :element-type 'integer
+                          :adjustable t :fill-pointer t)))
+    (dotimes (i arity sets) (setf (aref sets i) i))))
 
 (defun disjoint-sets-add (sets)
-  "Add a new item into its own disjoint set. Return a new id.
+  "Add a new item into its own disjoint set. Return the new id.
 
 Example:
 
