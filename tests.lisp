@@ -4,9 +4,7 @@
   (:use #:cl #:disjoint-sets)
   (:import-from #:parachute
                 #:define-test
-                #:is
-                #:true
-                #:false)
+                #:is)
   (:export #:run-tests))
 
 (in-package #:disjoint-sets.test)
